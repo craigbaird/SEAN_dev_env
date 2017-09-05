@@ -1,7 +1,7 @@
 myApp.factory('UserService', ['$http', '$location', function($http, $location){
 
   var userObject = {};
-  var eventObject = {};
+  // var eventObject = {};
 
   // Redirects to the view received as a parameter
   function redirect(page){
@@ -36,11 +36,11 @@ myApp.factory('UserService', ['$http', '$location', function($http, $location){
   };
 
   // Checks that event code has been entered otherwise goes back to login view
-  function checkEvent() {
-    if(!eventObject.eventCode) {
-      redirect('/login');
-    }
-  };
+  // function checkEvent() {
+  //   if(!eventObject.eventCode) {
+  //     redirect('/login');
+  //   }
+  // };
 
   // Logs out user
   function logout() {

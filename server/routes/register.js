@@ -17,15 +17,13 @@ router.post('/', function(req, res, next) {
   var saveUser = {
     username: req.body.username,
     password: encryptLib.encryptPassword(req.body.password),
-    email: req.body.email,
-    role : req.body.role
   };
   pool.connect(function(err, client, done) {
     if(err) {
       next(err);
     }
-    client.query("INSERT INTO users (username, password, role, email) VALUES ($1, $2, $3, $4) RETURNING id",
-      [saveUser.username, saveUser.password,saveUser.role, saveUser.email],
+    client.query("INSERT INTO users (username, password) VALUES ($1, $2) RETURNING id",
+      [saveUser.username, saveUser.password],
         function (err, result) {
           client.end();
           if(err) {
@@ -36,6 +34,5 @@ router.post('/', function(req, res, next) {
         });
   });
 });
-
 
 module.exports = router;

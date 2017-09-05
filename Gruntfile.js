@@ -38,39 +38,6 @@ module.exports = function(grunt){
               'angular-route.min.js.map'],
         dest: 'server/public/vendors/angular-route/'
       },
-      angularmaterial: {
-        expand: true,
-        cwd: 'node_modules/angular-material/',
-        src: ['angular-material.css',
-              'angular-material.js',
-              'angular-material.min.css',
-              'angular-material.min.js'],
-        dest: 'server/public/vendors/angular-material/'
-      },
-      angularanimate: {
-        expand: true,
-        cwd: 'node_modules/angular-animate/',
-        src: ['angular-animate.js',
-              'angular-animate.min.js',
-              'angular-animate.min.js.map'],
-        dest: 'server/public/vendors/angular-animate/'
-      },
-      angulararia: {
-        expand: true,
-        cwd: 'node_modules/angular-aria/',
-        src: ['angular-aria.js',
-              'angular-aria.min.js',
-              'angular-aria.min.js.map'],
-        dest: 'server/public/vendors/angular-aria/'
-      },
-      angularmessages: {
-        expand: true,
-        cwd: 'node_modules/angular-messages/',
-        src: ['angular-messages.js',
-              'angular-messages.min.js',
-              'angular-messages.min.js.map'],
-        dest: 'server/public/vendors/angular-messages/'
-      }
     }
   });
 
