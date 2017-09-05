@@ -1,53 +1,84 @@
-myApp.controller('LoginController', ['$scope', '$http', '$location', 'UserService', function($scope, $http, $location, UserService) {
+myApp.controller('LoginController', ['$scope', '$http', '$routeParams', 'UserService', 'UtilitiesService',
+        function($scope, $http, $routeParams, UserService, UtilitiesService) {
 
-    $scope.user = {
-      username: '',
-      password: ''
-    };
-    // $scope.message = '';
+  $scope.user = {
+    username: '',
+    password: ''
+  };
+  $scope.event = {
+    eventCode: ''
+  };
 
-    $scope.login = function() {
-      if($scope.user.username === '' || $scope.user.password === '') {
-        // $scope.message = 'Please enter your username and password';
-        alert(
-          'You forgot to enter something in. Please enter your username and password.'
-        );
-      } else {
-        $http.post('/', $scope.user).then(function(response) {
-          if(response.data.username) {
-            console.log('success: ', response.data);
-            // location works with SPA (ng-route)
-            $location.path('/user');
+  // Logins Admin user
+  $scope.login = function() {
+    if($scope.user.username == '' || $scope.user.password == '') {
+      UtilitiesService.showAlert('Enter your username and password!');
+    } else {
+      $http.post('/', $scope.user).then(function(response) {
+        if(response.data.username) {
+          if (response.data.role === 'ADMIN') {
+            UserService.redirect('/displayEvents');
           } else {
-            console.log('failure: ', response);
-            // $scope.message = 'Your username/password was incorrect. Please try again.';
-            alert(
-              'Your username or password was incorrect. Please try again.'
-            );
+            UserService.redirect('/checkInOut');
           }
-        });
-      }
-    };
+        } else {
+          UtilitiesService.showAlert('Invalid username and password combination.');
+        }
+      });
+    }
+  };
 
-    $scope.registerUser = function() {
-      if($scope.user.username === '' || $scope.user.password === '') {
-        // $scope.message = 'Please choose a username and password';
-        alert(
-          'You forgot to enter something in. Please choose a username and password.'
-        );
+  // Starts event based on event code
+  $scope.startEvent = function() {
+    if($scope.event.eventCode == '') {
+      UtilitiesService.showAlert('Please enter an event code!');
+    } else {
+      $http.get('/ssgEvent/start/' + $scope.event.eventCode).then(function(response) {
+        if(response.data.event_code) {
+          UserService.eventObject.eventCode = response.data.event_code;
+          UserService.eventObject.eventName = response.data.event_name;
+          UserService.eventObject.eventID = response.data.id;
+          UserService.redirect('/checkInOut');
+        } else {
+          UtilitiesService.showAlert('Invalid event code.');
+        }
+      });
+    }
+  };
+
+  // sends request to get a link to reset the password
+  $scope.sendResetPassword = function() {
+  if($scope.user.username === '') {
+    UtilitiesService.showAlert('Please enter your username.');
+  } else {
+    $http.post('/user/forgotpassword', $scope.user).then(function(response) {
+      if(response.data == 'Code sent successfully.') {
+        UtilitiesService.showAlert('A link to change the password was sent by email.');
       } else {
-        // console.log('sending to server...', $scope.user);
-        $http.post('/register', $scope.user).then(function(response) {
-          console.log('success');
-          $location.path('/home');
-        },
-        function(response) {
-          console.log('error');
-          // $scope.message = 'Please try again';
-          alert(
-            'Please try again.'
-          );
-        });
+        UtilitiesService.showAlert('There was an error sending the link to change the password.');
       }
-    };
+    });
+  }
+};
+
+// sends request to the server with updated password
+$scope.updatePassword = function() {
+  // Send our password reset request to the server
+  // with our username, new password and code
+  if($scope.user.username === '' || $scope.user.password === '') {
+    UtilitiesService.showAlert('Please enter your username and password.');
+  } else {
+    $scope.user.code = $routeParams.code;
+    $http.put('/user/resetpassword', $scope.user).then(function(response) {
+      if(response.data == 'Password updated successfully.') {
+        UtilitiesService.showAlert('Password updated successfully.');
+        UserService.redirect('/home');
+      } else {
+        UtilitiesService.showAlert('There was an error updating the password');
+      }
+    });
+  }
+};
+
+
 }]);

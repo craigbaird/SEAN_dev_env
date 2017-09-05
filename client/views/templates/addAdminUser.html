@@ -1,0 +1,57 @@
+<!-- HEADER INCLUDED -->
+<div ng-include="'views/partials/header.html'"></div>
+
+<!-- MENU INCLUDED -->
+<div ng-include="'views/partials/menu.html'"></div>
+
+<!-- REGISTER ADMIN USER VIEW -->
+<div layout="row">
+  <div layout-md="column" flex="20"></div>
+  <div layout="column" flex="60">
+    <div class="addAdminContainer">
+      <h1>ADD ADMIN USER</h1>
+        <form name="registerView" ng-submit="registerAdminUser()">
+          <div layout="column">
+          <md-input-container layout="column">
+            <div>
+              <label for="username">Username:</label>
+              <input type="text" ng-model="adminUser.username" required/>
+              <div ng-messages="registerView.adminUser.username.$error">
+                <div ng-message="required">A username is required!</div>
+              </div>
+            </div>
+          </md-input-container>
+          <md-input-container layout="column">
+            <div>
+              <label for="username">Email:</label>
+              <input type="text" ng-model="adminUser.email" required/>
+              <div ng-messages="registerView.adminUser.email.$error">
+                <div ng-message="required">An email is required!</div>
+              </div>
+            </div>
+          </md-input-container>
+          <md-input-container layout="column">
+            <div>
+              <label for="password">Password:</label>
+              <input type="password" ng-model="adminUser.password" required/>
+              <div ng-messages="registerView.adminUser.password.$error">
+                <div ng-message="required">A password is required!</div>
+              </div>
+            </div>
+          </md-input-container>
+        </div>
+        <!-- BUTTONS -->
+        <md-input-container layout="row" layout-align="start center">
+          <div>
+            <br>
+            <md-button class="themed-Btn" aria-label="Cancel" value="Cancel" ng-click="redirect('/displayEvents')">Back to Admin Home</md-button>
+            <md-button class="themed-Btn" type="submit" name="submit" aria-label="Register" value="Register">Register</md-button>
+          </div>
+        </md-input-container>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER INCLUDED -->
+<div ng-include="'views/partials/footer.html'"></div>

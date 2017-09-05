@@ -1,19 +1,72 @@
-<div class="container">
-  <div layout="column" layout-align="center center" style="min-height: 300px;" class="selectdemoValidations">
-    <h2 class="login">Login</h2>
-    <!-- <h4 class="alert" role="alert" ng-if="message != ''">{{message}}</h4> -->
+<!-- LOGIN VIEW -->
+<div layout="row">
+  <div layout-md="column" flex="15"></div>
+    <div layout="column" flex="30">
+      <div class="mainImageDiv">
+        <img class="mainLogo" src="views/assets/SSG_Logo_Drawn_Primary_tagline.png" alt="Simon Says Give">
+      </div>
+    </div>
+    <div layout-md="column" flex="10"></div>
+    <div layout="column" flex="30" class="mainLoginDiv">
+      <div>
+        <!-- START EVENT SECTION -->
+        <p>Start Event Registration:</p>
+        <form name="eventForm" ng-submit="startEvent()">
+          <md-input-container layout="column">
+            <div>
+              <label for="event.eventCode">Event Code:</label>
+              <input type="text" ng-model="event.eventCode" required/>
+              <div ng-messages="eventForm.event.eventCode.$error">
+                <div ng-message="required">An event code is required!</div>
+              </div>
+            </div>
+          </md-input-container>
+          <md-input-container layout="column" layout-align="center center">
+            <div>
+              <md-button class=" themed-Btn" type="submit" name="submit" aria-label="Start Event" value="Start Event">Start Event</md-button>
+            </div>
+          </md-input-container>
+        </form>
+      </div>
 
-      <form ng-submit="login()">
-        <label for="username">Username:</label>
-        <input type="text" ng-model="user.username"/>
-
-        <label for="password">Password:</label>
-        <input type="password" ng-model="user.password"/>
-
-        <button type="submit">Log In</button>
-
-        <a href="#register">Register</a>
-      </form>
-
-  </div>
+      <div layout="row" layout-align="center center">
+        <div flex="40" class="loginLine"></div>
+        <div>&nbsp&nbsp OR &nbsp&nbsp</div>
+        <div flex="40" class="loginLine"></div>
+      </div>
+      <div>
+        <!-- ADMIN LOGIN SECTION -->
+        <br>
+        <p>Login to Admin Site:</p>
+        <form name="loginView" ng-submit="login()">
+          <md-input-container layout="column">
+            <div>
+              <label for="username">Username:</label>
+              <input type="text" ng-model="user.username" required/>
+              <div ng-messages="loginView.user.username.$error">
+                <div ng-message="required">A username is required!</div>
+              </div>
+            </div>
+          </md-input-container>
+          <md-input-container layout="column">
+            <div>
+              <label for="password">Password:</label>
+              <input type="password" ng-model="user.password" required/>
+              <div ng-messages="loginView.user.password.$error">
+                <div ng-message="required">A password is required!</div>
+              </div>
+            </div>
+          </md-input-container>
+          <md-input-container layout="column" layout-align="center center">
+            <div>
+              <md-button class=" themed-Btn" type="submit" name="submit" aria-label="Log In" value="Log In">Log In</md-button>
+            </div>
+            <div>
+              <br>
+              <a class="forgotpassword" href="#forgotpassword">Forgot Password</a>
+            </div>
+          </md-input-container>
+        </form>
+      </div>
+    </div>
 </div>
