@@ -29,22 +29,22 @@ myApp.controller('LoginController', ['$scope', '$http', '$routeParams', 'UserSer
   };
 
   // Starts event based on event code
-  $scope.startEvent = function() {
-    if($scope.event.eventCode == '') {
-      UtilitiesService.showAlert('Please enter an event code!');
-    } else {
-      $http.get('/ssgEvent/start/' + $scope.event.eventCode).then(function(response) {
-        if(response.data.event_code) {
-          UserService.eventObject.eventCode = response.data.event_code;
-          UserService.eventObject.eventName = response.data.event_name;
-          UserService.eventObject.eventID = response.data.id;
-          UserService.redirect('/checkInOut');
-        } else {
-          UtilitiesService.showAlert('Invalid event code.');
-        }
-      });
-    }
-  };
+  // $scope.startEvent = function() {
+  //   if($scope.event.eventCode == '') {
+  //     UtilitiesService.showAlert('Please enter an event code!');
+  //   } else {
+  //     $http.get('/ssgEvent/start/' + $scope.event.eventCode).then(function(response) {
+  //       if(response.data.event_code) {
+  //         UserService.eventObject.eventCode = response.data.event_code;
+  //         UserService.eventObject.eventName = response.data.event_name;
+  //         UserService.eventObject.eventID = response.data.id;
+  //         UserService.redirect('/checkInOut');
+  //       } else {
+  //         UtilitiesService.showAlert('Invalid event code.');
+  //       }
+  //     });
+  //   }
+  // };
 
   // sends request to get a link to reset the password
   $scope.sendResetPassword = function() {
